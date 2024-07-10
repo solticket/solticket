@@ -2,7 +2,7 @@ import Hero from "@/components/Hero";
 
 const Home = () => {
   return (
-    <main className="flex flex-col items-center justify-between bg-black h-screen w-screen">
+    <main className="flex flex-col items-center justify-between bg-white h-screen w-screen">
       <Hero />
     </main>
   )
