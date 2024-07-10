@@ -6,7 +6,15 @@
   },
   "dependencies": {
     "@coral-xyz/anchor": "^0.30.1",
+<<<<<<< HEAD
     "lodash": "^4.17.21"
+=======
+    "@solana/wallet-adapter-react": "^0.15.35",
+    "@solana/wallet-adapter-react-ui": "^0.9.35",
+    "@solana/wallet-adapter-wallets": "^0.19.32",
+    "@solana/web3.js": "^1.95.0",
+    "pino-pretty": "^11.2.1"
+>>>>>>> 6d49d89 (Add contexts and wallet connection)
   },
   "devDependencies": {
     "@types/bn.js": "^5.1.0",

@@ -1,4 +1,4 @@
-import { Button } from "./ui/button";
+import { Button } from "../ui/button";
 
 const Hero = () => {
   return (
@@ -9,7 +9,7 @@ const Hero = () => {
       </h2>
 
       <div className="flex items-center mt-6 justify-center">
-        <Button>{"Explore our Exclusive Events"}</Button>
+        <Button size="lg">{"Explore our Exclusive Events"}</Button>
       </div>
     </div>
   );
