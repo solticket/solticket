@@ -13,21 +13,24 @@ const Home = () => {
         <Navbar />
         <Hero />
 
-        <div className="py-16">
+        <div className="py-16 w-full px-8">
           <h2 className="title">
             {"Reserve your tickets for our exclusives events"}
           </h2>
 
-          <EventsList />
+          <div className="mt-6 w-full">
+            <EventsList />
+          </div>
         </div>
 
         <Benefits />
 
-        <div className="py-16">
+        <div className="py-16 w-full items-center justify-center">
           <Button size="lg">
             {"Create your event and start selling tickets"}
           </Button>
         </div>
+
         <Footer />
       </main>
     </GlobalLayout>
