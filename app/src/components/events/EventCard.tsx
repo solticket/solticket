@@ -1,9 +1,7 @@
-import React from "react";
 import {
   Card,
   CardContent,
   CardDescription,
-  CardFooter,
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
@@ -11,16 +9,20 @@ import {
 const EventCard = () => {
   return (
     <Card>
+      <div className="h-[200px]  bg-gray-100">
+        {/* <Image
+          src="https://source.unsplash.com/300x200/?music"
+          alt="event"
+          className="w-full h-[200px] object-cover"
+        /> */}
+      </div>
       <CardHeader>
-        <CardTitle>Card Title</CardTitle>
-        <CardDescription>Card Description</CardDescription>
+        <CardTitle>Summer Music Festival, Paris</CardTitle>
+        <CardDescription>Apr 17-22</CardDescription>
       </CardHeader>
       <CardContent>
-        <p>Card Content</p>
+        <p></p>
       </CardContent>
-      <CardFooter>
-        <p>Card Footer</p>
-      </CardFooter>
     </Card>
   );
 };
