@@ -1,5 +1,7 @@
-import { createContext, useContext } from "react";
+import { createContext, useContext, useMemo } from "react";
 import { useAnchorWallet, useConnection } from "@solana/wallet-adapter-react";
+import { mockWallet } from "../utils/helpers";
+import { getProgram } from "../utils/program";
 
 export const ProgramContext = createContext({});
 
@@ -10,6 +12,12 @@ export const ProgramProvider = ({
 }) => {
   const { connection } = useConnection();
   const wallet = useAnchorWallet();
+
+  const program = useMemo(() => {
+    if (connection) {
+      return getProgram(connection, wallet ?? mockWallet());
+    }
+  }, [connection, wallet]);
 
   return (
     <ProgramContext.Provider value={{ connection, wallet }}>

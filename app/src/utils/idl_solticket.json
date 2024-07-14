@@ -1,0 +1,238 @@
+{
+  "version": "0.1.0",
+  "name": "solticket",
+  "address": "3ACETbVphkSQQ5WW82ArvnyFLDSrooVX6C77SL3UcXLB",
+  "metadata": {
+    "name": "solticket",
+    "version": "0.1.0",
+    "spec": "0.1.0",
+    "description": "Created with Anchor"
+  },
+  "instructions": [
+    {
+      "name": "create_event",
+      "discriminator": [
+        49,
+        219,
+        29,
+        203,
+        22,
+        98,
+        100,
+        87
+      ],
+      "accounts": [
+        {
+          "name": "event",
+          "writable": true,
+          "signer": true
+        },
+        {
+          "name": "signer",
+          "writable": true,
+          "signer": true
+        },
+        {
+          "name": "system_program",
+          "address": "11111111111111111111111111111111"
+        }
+      ],
+      "args": [
+        {
+          "name": "title",
+          "type": "string"
+        },
+        {
+          "name": "description",
+          "type": "string"
+        },
+        {
+          "name": "location",
+          "type": "string"
+        },
+        {
+          "name": "category",
+          "type": "string"
+        },
+        {
+          "name": "deadline",
+          "type": "u64"
+        },
+        {
+          "name": "ticket_count",
+          "type": "u32"
+        }
+      ]
+    },
+    {
+      "name": "update_status_deadline",
+      "discriminator": [
+        145,
+        5,
+        165,
+        0,
+        93,
+        242,
+        34,
+        150
+      ],
+      "accounts": [
+        {
+          "name": "event",
+          "writable": true
+        },
+        {
+          "name": "authority",
+          "signer": true,
+          "relations": [
+            "event"
+          ]
+        }
+      ],
+      "args": [
+        {
+          "name": "deadline",
+          "type": "u64"
+        }
+      ]
+    },
+    {
+      "name": "update_status_event",
+      "discriminator": [
+        157,
+        248,
+        179,
+        35,
+        36,
+        226,
+        226,
+        228
+      ],
+      "accounts": [
+        {
+          "name": "event",
+          "writable": true
+        },
+        {
+          "name": "authority",
+          "signer": true,
+          "relations": [
+            "event"
+          ]
+        }
+      ],
+      "args": [
+        {
+          "name": "status",
+          "type": {
+            "defined": {
+              "name": "EventStatus"
+            }
+          }
+        }
+      ]
+    }
+  ],
+  "accounts": [
+    {
+      "name": "Event",
+      "discriminator": [
+        125,
+        192,
+        125,
+        158,
+        9,
+        115,
+        152,
+        233
+      ]
+    }
+  ],
+  "types": [
+    {
+      "name": "Category",
+      "type": {
+        "kind": "enum",
+        "variants": [
+          {
+            "name": "PHYSICAL"
+          },
+          {
+            "name": "VIRTUAL"
+          }
+        ]
+      }
+    },
+    {
+      "name": "Event",
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "authority",
+            "type": "pubkey"
+          },
+          {
+            "name": "title",
+            "type": "string"
+          },
+          {
+            "name": "description",
+            "type": "string"
+          },
+          {
+            "name": "location",
+            "type": "string"
+          },
+          {
+            "name": "category",
+            "type": {
+              "defined": {
+                "name": "Category"
+              }
+            }
+          },
+          {
+            "name": "deadline",
+            "type": "u64"
+          },
+          {
+            "name": "ticket_count",
+            "type": "u32"
+          },
+          {
+            "name": "status",
+            "type": {
+              "defined": {
+                "name": "EventStatus"
+              }
+            }
+          }
+        ]
+      }
+    },
+    {
+      "name": "EventStatus",
+      "type": {
+        "kind": "enum",
+        "variants": [
+          {
+            "name": "CREATE"
+          },
+          {
+            "name": "SALE"
+          },
+          {
+            "name": "RUN"
+          },
+          {
+            "name": "CLOSED"
+          },
+          {
+            "name": "CANCELLED"
+          }
+        ]
+      }
+    }
+  ]
+}
