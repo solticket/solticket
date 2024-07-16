@@ -13,6 +13,6 @@ pub enum EventStatus {
 
 #[derive(AnchorSerialize, AnchorDeserialize, Clone, Debug, PartialEq, EnumString)]
 pub enum Category {
-    PHYSICAL, 
+    PHYSICAL,
     VIRTUAL
 }
