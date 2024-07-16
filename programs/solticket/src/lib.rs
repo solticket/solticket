@@ -36,6 +36,7 @@ pub mod solticket {
     }
 
     pub fn update_status_event(ctx: Context<UpdateEvent>, status: String) -> Result<()> {
+
         instructions::update_status_event(ctx, status)
     }
 
