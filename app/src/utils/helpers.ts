@@ -3,11 +3,15 @@ export const shortenPk = (pk: any, chars = 5) => {
   return `${pkStr.slice(0, chars)}...${pkStr.slice(-chars)}`;
 };
 
-export const confirmTx = async (txHash: string, connection: any ) => {
+export const confirmTx = async (txHash: string, connection: any) => {
   const blockhashInfo = await connection.getLatestBlockhash();
   await connection.confirmTransaction({
     blockhash: blockhashInfo.blockhash,
     lastValidBlockHeight: blockhashInfo.lastValidBlockHeight,
     signature: txHash,
   });
+};
+
+export const mockWallet = () => {
+  return {};
 };
