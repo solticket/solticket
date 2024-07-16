@@ -1,5 +1,5 @@
-use anchor_lang::prelude::*;
 use crate::{constants::EventStatus, Category};
+use anchor_lang::prelude::*;
 
 #[account]
 pub struct Event {
@@ -10,6 +10,5 @@ pub struct Event {
     pub category: Category,
     pub deadline: u64,
     pub ticket_count: u32,
-    pub status: EventStatus
+    pub status: String,
 }
-
