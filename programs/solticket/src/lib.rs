@@ -1,5 +1,6 @@
 use anchor_lang::prelude::*;
 use std::str::FromStr;
+use crate::errors::ErrorCode;
 declare_id!("3ACETbVphkSQQ5WW82ArvnyFLDSrooVX6C77SL3UcXLB");
 
 pub mod constants;
@@ -9,10 +10,9 @@ pub mod state;
 
 use instructions::*;
 use constants::*;
+
 #[program]
 pub mod solticket {
-
-
     use super::*;
 
     pub fn create_event(
@@ -24,8 +24,8 @@ pub mod solticket {
         deadline: u64,
         ticket_count: u32
     ) -> Result<()> {
-        let categoryEnum = Category::from_str("VIRTUAL").unwrap();
-        instructions::create_event(ctx, title, description, location, categoryEnum, deadline, ticket_count)
+        let category_enum = Category::from_str(&category).map_err(|_| ErrorCode::InvalidCategory)?;
+        instructions::create_event(ctx, title, description, location, category_enum, deadline, ticket_count)
     }
 
     pub fn update_status_event(
@@ -35,7 +35,7 @@ pub mod solticket {
         instructions::update_status_event(ctx, status)
     }
 
-    pub fn update_status_deadline(
+    pub fn update_deadline_event(
         ctx: Context<UpdateEvent>,
         deadline: u64,
     ) -> Result<()> {
