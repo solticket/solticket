@@ -1,3 +1,5 @@
+"use client";
+
 import Hero from "@/components/homepage/Hero";
 import Navbar from "@/components/layout/Navbar";
 import EventsList from "@/components/events/EventsList";

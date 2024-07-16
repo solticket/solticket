@@ -2,6 +2,8 @@ import { createContext, useContext, useMemo } from "react";
 import { useAnchorWallet, useConnection } from "@solana/wallet-adapter-react";
 import { mockWallet } from "../utils/helpers";
 import { getProgram } from "../utils/program";
+// Ensure styles are loaded for wallet adapter UI components
+import "@solana/wallet-adapter-react-ui/styles.css";
 
 export const ProgramContext = createContext({});
 
@@ -11,7 +13,7 @@ export const ProgramProvider = ({
   children: React.ReactNode;
 }) => {
   const { connection } = useConnection();
-  const wallet = useAnchorWallet();
+  const wallet = useAnchorWallet() as any;
 
   const program = useMemo(() => {
     if (connection) {

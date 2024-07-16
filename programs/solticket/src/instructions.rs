@@ -1,4 +1,4 @@
-use crate::{constants::EventStatus, state::Event, Category};
+use crate::{state::Event, Category};
 use anchor_lang::prelude::*;
 
 pub fn create_event(

@@ -1,38 +1,24 @@
 {
-  "address": "3ACETbVphkSQQ5WW82ArvnyFLDSrooVX6C77SL3UcXLB",
-  "metadata": {
-    "name": "solticket",
-    "version": "0.1.0",
-    "spec": "0.1.0",
-    "description": "Created with Anchor"
-  },
+  "version": "0.1.0",
+  "name": "vote",
   "instructions": [
     {
-      "name": "create_event",
-      "discriminator": [
-        49,
-        219,
-        29,
-        203,
-        22,
-        98,
-        100,
-        87
-      ],
+      "name": "createProposal",
       "accounts": [
         {
-          "name": "event",
-          "writable": true,
-          "signer": true
+          "name": "proposal",
+          "isMut": true,
+          "isSigner": true
         },
         {
           "name": "signer",
-          "writable": true,
-          "signer": true
+          "isMut": true,
+          "isSigner": true
         },
         {
-          "name": "system_program",
-          "address": "11111111111111111111111111111111"
+          "name": "systemProgram",
+          "isMut": false,
+          "isSigner": false
         }
       ],
       "args": [
@@ -45,49 +31,11 @@
           "type": "string"
         },
         {
-          "name": "location",
-          "type": "string"
+          "name": "choices",
+          "type": {
+            "vec": "string"
+          }
         },
-        {
-          "name": "_category",
-          "type": "string"
-        },
-        {
-          "name": "deadline",
-          "type": "u64"
-        },
-        {
-          "name": "ticket_count",
-          "type": "u32"
-        }
-      ]
-    },
-    {
-      "name": "update_status_deadline",
-      "discriminator": [
-        145,
-        5,
-        165,
-        0,
-        93,
-        242,
-        34,
-        150
-      ],
-      "accounts": [
-        {
-          "name": "event",
-          "writable": true
-        },
-        {
-          "name": "authority",
-          "signer": true,
-          "relations": [
-            "event"
-          ]
-        }
-      ],
-      "args": [
         {
           "name": "deadline",
           "type": "u64"
@@ -95,77 +43,43 @@
       ]
     },
     {
-      "name": "update_status_event",
-      "discriminator": [
-        157,
-        248,
-        179,
-        35,
-        36,
-        226,
-        226,
-        228
-      ],
+      "name": "castVote",
       "accounts": [
         {
-          "name": "event",
-          "writable": true
+          "name": "proposal",
+          "isMut": true,
+          "isSigner": false
         },
         {
-          "name": "authority",
-          "signer": true,
-          "relations": [
-            "event"
-          ]
+          "name": "voter",
+          "isMut": true,
+          "isSigner": false
+        },
+        {
+          "name": "signer",
+          "isMut": true,
+          "isSigner": true
+        },
+        {
+          "name": "systemProgram",
+          "isMut": false,
+          "isSigner": false
         }
       ],
       "args": [
         {
-          "name": "status",
-          "type": "string"
+          "name": "choice",
+          "type": "u8"
         }
       ]
     }
   ],
   "accounts": [
     {
-      "name": "Event",
-      "discriminator": [
-        125,
-        192,
-        125,
-        158,
-        9,
-        115,
-        152,
-        233
-      ]
-    }
-  ],
-  "types": [
-    {
-      "name": "Category",
-      "type": {
-        "kind": "enum",
-        "variants": [
-          {
-            "name": "PHYSICAL"
-          },
-          {
-            "name": "VIRTUAL"
-          }
-        ]
-      }
-    },
-    {
-      "name": "Event",
+      "name": "Proposal",
       "type": {
         "kind": "struct",
         "fields": [
-          {
-            "name": "authority",
-            "type": "pubkey"
-          },
           {
             "name": "title",
             "type": "string"
@@ -175,31 +89,74 @@
             "type": "string"
           },
           {
-            "name": "location",
-            "type": "string"
-          },
-          {
-            "name": "category",
+            "name": "choices",
             "type": {
-              "defined": {
-                "name": "Category"
+              "vec": {
+                "defined": "Choice"
               }
             }
           },
           {
             "name": "deadline",
             "type": "u64"
-          },
-          {
-            "name": "ticket_count",
-            "type": "u32"
-          },
-          {
-            "name": "status",
-            "type": "string"
           }
         ]
       }
+    },
+    {
+      "name": "Voter",
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "proposal",
+            "type": "publicKey"
+          },
+          {
+            "name": "user",
+            "type": "publicKey"
+          },
+          {
+            "name": "choiceOption",
+            "type": "u8"
+          }
+        ]
+      }
+    }
+  ],
+  "types": [
+    {
+      "name": "Choice",
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "label",
+            "type": "string"
+          },
+          {
+            "name": "count",
+            "type": "u64"
+          }
+        ]
+      }
+    }
+  ],
+  "errors": [
+    {
+      "code": 6000,
+      "name": "MaxChoicesReach",
+      "msg": "Too many choices"
+    },
+    {
+      "code": 6001,
+      "name": "InvalidOption",
+      "msg": "Invalid option"
+    },
+    {
+      "code": 6002,
+      "name": "VotingIsOver",
+      "msg": "Vote is over"
     }
   ]
 }
