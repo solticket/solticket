@@ -1,16 +1,17 @@
 use anchor_lang::prelude::*;
 use std::str::FromStr;
-declare_id!("3ACETbVphkSQQ5WW82ArvnyFLDSrooVX6C77SL3UcXLB");
+declare_id!("Bn3L15y9EiCGkGYK3nu98jcqw6n8uTjoBWKeJna1eMdm");
 
 pub mod constants;
 pub mod errors;
 pub mod instructions;
 pub mod state;
 
-use constants::*;
 use instructions::*;
 #[program]
 pub mod solticket {
+
+    use state::Category;
 
     use super::*;
 
@@ -36,7 +37,6 @@ pub mod solticket {
     }
 
     pub fn update_status_event(ctx: Context<UpdateEvent>, status: String) -> Result<()> {
-
         instructions::update_status_event(ctx, status)
     }
 

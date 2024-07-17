@@ -13,13 +13,23 @@ import { useMemo } from "react";
 import { clusterApiUrl } from "@solana/web3.js";
 
 const GlobalLayout = ({ children }: { children: React.ReactNode }) => {
+
   // const endpoint = "https://api.devnet.solana.com";
   // const endpoint = "http://127.0.0.1:8899";
 
   const network = WalletAdapterNetwork.Devnet;
   const endpoint = useMemo(() => clusterApiUrl(network), [network]);
 
-  const wallets = useMemo(() => [new PhantomWalletAdapter()], []);
+  //const endpoint = "http://127.0.0.1:8899";
+  const wallets = useMemo(
+    () => [
+      new PhantomWalletAdapter(),
+    ],
+    []
+  );
+
+  
+
 
   return (
     <ConnectionProvider endpoint={endpoint}>
