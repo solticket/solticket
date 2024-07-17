@@ -6,7 +6,7 @@ import { program } from "@coral-xyz/anchor/dist/cjs/native/system";
 import { Keypair } from "@solana/web3.js";
 // Ensure styles are loaded for wallet adapter UI components
 import "@solana/wallet-adapter-react-ui/styles.css";
-import { BN } from "bn.js";
+import BN, { BN } from "bn.js";
 
 export const ProgramContext = createContext({});
 
@@ -39,7 +39,7 @@ export const ProgramProvider = ({
   }
 
 
-  const createEvent = async (titre, description, location, category, votingDays, ticketCount) => {
+  const createEvent = async (titre: String, description: String, location: String, category: String, votingDays: BN, ticketCount: number) => {
     const eventCreator = wallet;
     const eventKeypair = Keypair.generate();
     
