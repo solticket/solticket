@@ -1,5 +1,5 @@
 import { PublicKey } from "@solana/web3.js";
 
 export const PROGRAM_ID = new PublicKey(
-  "3ACETbVphkSQQ5WW82ArvnyFLDSrooVX6C77SL3UcXLB"
+  "Bn3L15y9EiCGkGYK3nu98jcqw6n8uTjoBWKeJna1eMdm"
 );

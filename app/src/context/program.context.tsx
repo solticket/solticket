@@ -1,7 +1,9 @@
-import { createContext, useContext, useMemo } from "react";
+import { createContext, useContext, useEffect, useMemo, useState } from "react";
 import { useAnchorWallet, useConnection } from "@solana/wallet-adapter-react";
 import { mockWallet } from "../utils/helpers";
 import { getProgram } from "../utils/program";
+import { program } from "@coral-xyz/anchor/dist/cjs/native/system";
+import { Keypair } from "@solana/web3.js";
 
 export const ProgramContext = createContext({});
 
@@ -18,6 +20,22 @@ export const ProgramProvider = ({
       return getProgram(connection, wallet ?? mockWallet());
     }
   }, [connection, wallet]);
+
+
+  useEffect(() => {
+    if(events.length == 0){
+      viewEvents();
+    }
+  }, [program]);
+
+  const [events, setEvents] = useState([]);
+
+  const viewEvents = async () => {
+    console.log(program.account.event);
+    const events = await program.account.event.all();
+    console.log(events);
+    setEvents(events);
+  }
 
   return (
     <ProgramContext.Provider value={{ connection, wallet }}>
