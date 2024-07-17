@@ -1,4 +1,4 @@
-use crate::{constants::EventStatus, Category};
+use crate::Category;
 use anchor_lang::prelude::*;
 
 #[account]
