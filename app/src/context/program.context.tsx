@@ -55,7 +55,7 @@ export const ProgramProvider = ({
       .rpc();
   };
   return (
-    <ProgramContext.Provider value={{ connection, wallet }}>
+    <ProgramContext.Provider value={{ connection, wallet, events, createEvent }}>
       {children}
     </ProgramContext.Provider>
   );
