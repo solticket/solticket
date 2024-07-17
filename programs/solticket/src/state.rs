@@ -1,5 +1,22 @@
 use anchor_lang::prelude::*;
-use crate::{constants::EventStatus, Category};
+use strum_macros::EnumString;
+
+#[derive(AnchorSerialize, AnchorDeserialize, Clone, EnumString)]
+pub enum EventStatus {
+    CREATE,
+    SALE,
+    RUN,
+    CLOSED,
+    CANCELLED
+}
+
+
+
+#[derive(AnchorSerialize, AnchorDeserialize, Clone, EnumString)]
+pub enum Category {
+    PHYSICAL, 
+    VIRTUAL
+}
 
 #[account]
 pub struct Event {
@@ -10,6 +27,5 @@ pub struct Event {
     pub category: Category,
     pub deadline: u64,
     pub ticket_count: u32,
-    pub status: EventStatus
+    pub status: EventStatus,
 }
-

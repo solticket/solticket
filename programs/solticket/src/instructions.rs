@@ -1,5 +1,6 @@
 use anchor_lang::prelude::*;
-use crate::{constants::EventStatus, state::Event, Category};
+use std::str::FromStr;
+use crate::{state::EventStatus, state::Event, state::Category};
 
 pub fn create_event(
     ctx: Context<CreateEvent>,
@@ -26,17 +27,15 @@ pub fn create_event(
 
 pub fn update_status_event(
     ctx: Context<UpdateEvent>,
-    status: EventStatus
+    status: String
 ) -> Result<()> {
     let event_account = &mut ctx.accounts.event;
-    event_account.status = status;
+    let status_enum = EventStatus::from_str(&status).unwrap();
+    event_account.status = status_enum;
     Ok(())
 }
 
-pub fn update_deadline_event(
-    ctx: Context<UpdateEvent>,
-    deadline: u64
-) -> Result<()> {
+pub fn update_deadline_event(ctx: Context<UpdateEvent>, deadline: u64) -> Result<()> {
     let event_account = &mut ctx.accounts.event;
 
     event_account.deadline = deadline;
@@ -57,5 +56,5 @@ pub struct CreateEvent<'info> {
 pub struct UpdateEvent<'info> {
     #[account(mut, has_one = authority)]
     pub event: Account<'info, Event>,
-    pub authority: Signer<'info>
+    pub authority: Signer<'info>,
 }
