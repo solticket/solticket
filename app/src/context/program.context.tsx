@@ -6,7 +6,7 @@ import { program } from "@coral-xyz/anchor/dist/cjs/native/system";
 import { Keypair } from "@solana/web3.js";
 // Ensure styles are loaded for wallet adapter UI components
 import "@solana/wallet-adapter-react-ui/styles.css";
-import BN, { BN } from "bn.js";
+import BN from "bn.js";
 
 export const ProgramContext = createContext({});
 
@@ -32,8 +32,8 @@ export const ProgramProvider = ({
   const [events, setEvents] = useState([]);
 
   const viewEvents = async () => {
-    console.log(program.account.event);
-    const events = await program.account.event.all();
+    console.log(program?.account?.event);
+    const events = await program?.account?.event.all();
     console.log(events);
     setEvents(events);
   }
@@ -43,7 +43,7 @@ export const ProgramProvider = ({
     const eventCreator = wallet;
     const eventKeypair = Keypair.generate();
     
-    const txHash = await program.methods
+    const txHash = await program?.methods
       .createEvent(titre, description, location, category, votingDays, ticketCount)
       .accounts({
         event: eventKeypair.publicKey,
