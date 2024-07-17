@@ -2,9 +2,9 @@
 
 import { ProgramProvider } from "@/context/program.context";
 import Footer from "./Footer";
+import { WalletAdapterNetwork } from "@solana/wallet-adapter-base";
 import { PhantomWalletAdapter } from "@solana/wallet-adapter-wallets";
 import { WalletModalProvider } from "@solana/wallet-adapter-react-ui";
-import { WalletAdapterNetwork } from "@solana/wallet-adapter-base";
 import {
   ConnectionProvider,
   WalletProvider,
@@ -14,7 +14,12 @@ import { clusterApiUrl } from "@solana/web3.js";
 
 const GlobalLayout = ({ children }: { children: React.ReactNode }) => {
 
-  const endpoint = clusterApiUrl(WalletAdapterNetwork.Devnet);
+  // const endpoint = "https://api.devnet.solana.com";
+  // const endpoint = "http://127.0.0.1:8899";
+
+  const network = WalletAdapterNetwork.Devnet;
+  const endpoint = useMemo(() => clusterApiUrl(network), [network]);
+
   //const endpoint = "http://127.0.0.1:8899";
   const wallets = useMemo(
     () => [
@@ -32,7 +37,6 @@ const GlobalLayout = ({ children }: { children: React.ReactNode }) => {
         <WalletModalProvider>
           <ProgramProvider>
             <div>{children}</div>
-
             <Footer />
           </ProgramProvider>
         </WalletModalProvider>

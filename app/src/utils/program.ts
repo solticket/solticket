@@ -9,10 +9,12 @@ import {
   setProvider,
 } from "@coral-xyz/anchor"
 
+
 export const getProgram = (connection: Connection, wallet: anchor.Wallet) => {
   // Configure the client to use the local cluster.
   const provider = new AnchorProvider(connection, wallet, {
     commitment: "confirmed",
+
   })
   setProvider(provider)
 
@@ -20,6 +22,7 @@ export const getProgram = (connection: Connection, wallet: anchor.Wallet) => {
   const program = new Program(idl as Idl, provider);
 
   console.log(program);
+
   return program;
 };
  
