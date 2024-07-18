@@ -49,7 +49,7 @@ export const ProgramProvider = ({
     const eventCreator = wallet
     const eventKeypair = Keypair.generate()
     if (!program) return
-    await program.methods
+    const tx = await program.methods
       .createEvent(
         data.title,
         data.description,
@@ -64,6 +64,8 @@ export const ProgramProvider = ({
       })
       .signers([eventKeypair])
       .rpc()
+
+    console.info('createEvent tx', tx)
   }
 
   return (

@@ -24,7 +24,7 @@ const EventDetailsContent = ({ eventId }: { eventId: String }) => {
   }
 
   return (
-    <div className="py-16 max-w-screen-lg m-auto">
+    <div className="py-16 max-w-screen-lg px-2 lg:px-0 m-auto">
       <div>
         <Link href="/discover-events">{'< Back to events'}</Link>
       </div>

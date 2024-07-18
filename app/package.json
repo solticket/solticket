@@ -10,7 +10,10 @@
   },
   "dependencies": {
     "@coral-xyz/anchor": "^0.30.0",
+    "@hookform/resolvers": "^3.9.0",
     "@project-serum/anchor": "^0.26.0",
+    "@radix-ui/react-dialog": "^1.1.1",
+    "@radix-ui/react-label": "^2.1.0",
     "@radix-ui/react-slot": "^1.1.0",
     "@solana/wallet-adapter-base": "^0.9.23",
     "@solana/wallet-adapter-react": "^0.15.35",
@@ -28,8 +31,11 @@
     "pino-pretty": "^11.2.1",
     "react": "18.2.0",
     "react-dom": "18.2.0",
+    "react-hook-form": "^7.52.1",
     "tailwind-merge": "^2.4.0",
-    "tailwindcss-animate": "^1.0.7"
+    "tailwindcss-animate": "^1.0.7",
+    "zod": "^3.23.8",
+    "zustand": "^4.5.4"
   },
   "devDependencies": {
     "@types/bn.js": "^5.1.5",

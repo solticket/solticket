@@ -16,7 +16,7 @@ const Home = () => {
         <Navbar />
         <Hero />
 
-        <div className="py-16 max-w-screen-xl m-auto px-8">
+        <div className="py-16 max-w-screen-xl xl:px-0 m-auto px-8">
           <h2 className="title">
             {'Reserve your tickets for our exclusives events'}
           </h2>
