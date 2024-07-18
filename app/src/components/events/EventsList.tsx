@@ -13,7 +13,7 @@ const EventsList = () => {
 
   if (fetchingEvents) {
     return (
-      <div className="grid grid-cols-3 space-x-4 w-full gap-4">
+      <div className="grid grid-cols-3 w-full gap-4">
         <EventCardSkeleton />
         <EventCardSkeleton />
         <EventCardSkeleton />
@@ -23,7 +23,7 @@ const EventsList = () => {
   }
 
   return (
-    <div className="grid grid-cols-4 space-x-4 w-full gap-4">
+    <div className="grid grid-cols-3 w-full gap-4">
       {events.map((event, index) => (
         <EventCard key={index} event={event.account} />
       ))}

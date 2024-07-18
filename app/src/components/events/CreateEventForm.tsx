@@ -18,7 +18,7 @@ const CreateEventForm = () => {
           })
         }}
       >
-        {'Create an event'}
+        {'Create new event'}
       </Button>
     </div>
   )
