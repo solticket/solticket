@@ -1,35 +1,21 @@
-"use client";
+'use client'
 
-import { ProgramProvider } from "@/context/program.context";
-import Footer from "./Footer";
-import { WalletAdapterNetwork } from "@solana/wallet-adapter-base";
-import { PhantomWalletAdapter } from "@solana/wallet-adapter-wallets";
-import { WalletModalProvider } from "@solana/wallet-adapter-react-ui";
+import { ProgramProvider } from '@/context/program.context'
+import Footer from './Footer'
+import { WalletAdapterNetwork } from '@solana/wallet-adapter-base'
+import { PhantomWalletAdapter } from '@solana/wallet-adapter-wallets'
+import { WalletModalProvider } from '@solana/wallet-adapter-react-ui'
 import {
   ConnectionProvider,
   WalletProvider,
-} from "@solana/wallet-adapter-react";
-import { useMemo } from "react";
-import { clusterApiUrl } from "@solana/web3.js";
+} from '@solana/wallet-adapter-react'
+import { useMemo } from 'react'
+import { clusterApiUrl } from '@solana/web3.js'
 
 const GlobalLayout = ({ children }: { children: React.ReactNode }) => {
-
-  // const endpoint = "https://api.devnet.solana.com";
-  // const endpoint = "http://127.0.0.1:8899";
-
-  const network = WalletAdapterNetwork.Devnet;
-  const endpoint = useMemo(() => clusterApiUrl(network), [network]);
-
-  //const endpoint = "http://127.0.0.1:8899";
-  const wallets = useMemo(
-    () => [
-      new PhantomWalletAdapter(),
-    ],
-    []
-  );
-
-  
-
+  const network = WalletAdapterNetwork.Devnet
+  const endpoint = useMemo(() => clusterApiUrl(network), [network])
+  const wallets = useMemo(() => [new PhantomWalletAdapter()], [])
 
   return (
     <ConnectionProvider endpoint={endpoint}>
@@ -42,7 +28,7 @@ const GlobalLayout = ({ children }: { children: React.ReactNode }) => {
         </WalletModalProvider>
       </WalletProvider>
     </ConnectionProvider>
-  );
-};
+  )
+}
 
-export default GlobalLayout;
+export default GlobalLayout
