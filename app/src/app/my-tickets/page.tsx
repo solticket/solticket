@@ -1,19 +1,18 @@
 'use client'
 
-import CreateYourEventContent from '@/components/events/CreateYourEventContent'
+import MyTicketsContent from '@/components/events/MyTicketsContent'
 import GlobalLayout from '@/components/layout/GlobalLayout'
 import Navbar from '@/components/layout/Navbar'
 
-const CreateYourEventPage = () => {
+const MyTicketsPage = () => {
   return (
     <GlobalLayout>
       <main className="main-container">
         <Navbar />
-
-        <CreateYourEventContent />
+        <MyTicketsContent />
       </main>
     </GlobalLayout>
   )
 }
 
-export default CreateYourEventPage
+export default MyTicketsPage

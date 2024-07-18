@@ -1,11 +1,18 @@
+import { useRouter } from 'next/navigation'
+
 const Logo = () => {
+  const router = useRouter()
   return (
     <svg
+      className="cursor-pointer"
       width="40"
       height="40"
       viewBox="0 0 48 48"
       fill="none"
       xmlns="http://www.w3.org/2000/svg"
+      onClick={() => {
+        router.push('/')
+      }}
     >
       <g clipPath="url(#clip0_5_495)">
         <path
@@ -19,7 +26,7 @@ const Logo = () => {
         </clipPath>
       </defs>
     </svg>
-  );
-};
+  )
+}
 
-export default Logo;
+export default Logo
