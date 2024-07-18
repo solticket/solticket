@@ -8,6 +8,7 @@ import {
 import { EventData } from "@/types/event";
 import dayjs from "dayjs";
 import Image from "next/image";
+import { useEffect } from "react";
 
 const EventCard = ({ event }: { event: EventData}) => {
   return (
@@ -23,7 +24,7 @@ const EventCard = ({ event }: { event: EventData}) => {
       </div>
       <CardHeader className="p-4">
         <CardTitle className="text-lg font-semibold">{`${event.title}, ${event.location}`}</CardTitle>
-        <CardDescription>{dayjs(event.deadline).format('DD MM YYYY')}</CardDescription>
+        <CardDescription>{dayjs(event.deadline.toNumber() * 1000).format('DD MM YYYY')}</CardDescription>
       </CardHeader>
       <CardContent className="p-4 pt-0 text-sm">
         {event.description}

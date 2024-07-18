@@ -1,15 +1,10 @@
-"use client";
+import { useProgramContext } from '@/context/program.context'
+import { Button } from '../ui/button'
+import { useState } from 'react';
+import { EventData } from '@/types/event';
+import { BN } from 'bn.js';
 
-import Hero from "@/components/homepage/Hero";
-import Navbar from "@/components/layout/Navbar";
-import Benefits from "@/components/homepage/Benefits";
-import GlobalLayout from "@/components/layout/GlobalLayout";
-import { Button } from "@/components/ui/button";
-import { useState } from "react";
-import { useProgramContext } from "@/context/program.context";
-import { BN } from "bn.js";
-
-const CreateEvent = () => {
+const CreateEventForm = () => {
   const { createEvent } = useProgramContext();
   const [formData, setFormData] = useState({
     title: '',
@@ -19,7 +14,7 @@ const CreateEvent = () => {
     count: ''
   });
 
-  const handleChange = (e) => { 
+  const handleChange = (e: any) => { 
     const { name, value } = e.target;
     setFormData({
       ...formData,
@@ -27,21 +22,25 @@ const CreateEvent = () => {
     });
   };
 
-  const creerEvent = (e) => {
+  const creerEvent = (e: any) => {
     e.preventDefault();
     console.log(formData);
     const deadLine = new Date(formData.date);
-    createEvent(formData.title, formData.description, formData.location, "VIRTUAL", new BN(303), parseInt(formData.count));
+    const eventData : EventData= {
+      title: formData.title,
+      description: formData.description,
+      category: "VIRTUAL",
+      location : formData.location,
+      deadline: new BN(new Date(formData.date).getTime() / 1000),
+      count: parseInt(formData.count)
+    };
+    createEvent(eventData);
     // You can add your form submission logic here
   };
-
+  
   return (
-    <GlobalLayout>
-      <main className="flex flex-col items-center justify-between w-full">
-        <Navbar />
-        <Hero />
-
- <form onSubmit={creerEvent}>
+    <div>
+       <form onSubmit={creerEvent}>
       <div>
         <label htmlFor="title">Title:</label>
         <input
@@ -91,19 +90,14 @@ const CreateEvent = () => {
           onChange={handleChange}
         />
       </div>
-      <button type="submit">Submit</button>
-    </form>
+        <Button type="submit"
+          size="lg"
+        >
+          {'Create an event'}
+        </Button>
+      </form>
+    </div>
+  )
+}
 
-        <Benefits />
-
-        <div className="py-16 w-full items-center justify-center flex">
-          <Button size="lg">
-            {"Create your event and start selling tickets"}
-          </Button>
-        </div>
-      </main>
-    </GlobalLayout>
-  );
-};
-
-export default CreateEvent;
+export default CreateEventForm

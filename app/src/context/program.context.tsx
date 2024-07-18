@@ -7,21 +7,13 @@ import {
 import { mockWallet } from '../utils/helpers'
 import { getProgram } from '../utils/program'
 import { Connection, Keypair } from '@solana/web3.js'
-import BN from 'bn.js'
-import { Event } from '@/types/event'
+import { Event, EventData } from '@/types/event'
 
 export const ProgramContext = createContext({
   connection: null as Connection | null,
   wallet: null as AnchorWallet | null,
   events: [] as Event[],
-  createEvent: (
-    _titre: String,
-    _description: String,
-    _location: String,
-    _category: String,
-    _votingDays: BN,
-    _ticketCount: number,
-  ) => {},
+  createEvent: (_data: EventData) => {},
   fetchEvents: () => {},
   fetchingEvents: false,
 })
@@ -50,33 +42,22 @@ export const ProgramProvider = ({
   const fetchEvents = async () => {
     if (!program) return
     setFetchingEvents(true)
-    const events = await (program.account as any).event.all()
+    const events = await (program.account as any).event.all();
     setEvents(events)
     setFetchingEvents(false)
   }
 
-
-
-  const createEvent = async (
-    titre: String,
-    description: String,
-    location: String,
-    category: String,
-    votingDays: BN,
-    ticketCount: number,
-  ) => {
-    console.log("Create Event inner");
+  const createEvent = async (data: EventData) => {
     const eventCreator = wallet
     const eventKeypair = Keypair.generate()
     if (!program) return
     await program.methods
-      .createEvent(
-        titre,
-        description,
-        location,
-        category,
-        votingDays,
-        ticketCount,
+      .createEvent(data.title,
+        data.description,
+        data.location,
+        data.category,
+        data.deadline,
+        data.count,
       )
       .accounts({
         event: eventKeypair.publicKey,
