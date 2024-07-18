@@ -25,7 +25,7 @@ const EventsList = () => {
   return (
     <div className="grid grid-cols-3 w-full gap-4">
       {events.map((event, index) => (
-        <EventCard key={index} event={event.account} />
+        <EventCard key={index} event={event} />
       ))}
     </div>
   )

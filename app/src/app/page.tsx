@@ -6,8 +6,10 @@ import EventsList from '@/components/events/EventsList'
 import Benefits from '@/components/homepage/Benefits'
 import GlobalLayout from '@/components/layout/GlobalLayout'
 import { Button } from '@/components/ui/button'
+import { useRouter } from 'next/navigation'
 
 const Home = () => {
+  const router = useRouter()
   return (
     <GlobalLayout>
       <main className="main-container">
@@ -27,7 +29,12 @@ const Home = () => {
         <Benefits />
 
         <div className="py-16 w-full items-center justify-center flex">
-          <Button size="lg">
+          <Button
+            size="lg"
+            onClick={() => {
+              router.push('/create-event')
+            }}
+          >
             {'Create your event and start selling tickets'}
           </Button>
         </div>
