@@ -5,30 +5,39 @@ import {
   CardHeader,
   CardTitle,
 } from '@/components/ui/card'
-import { EventData } from '@/types/event'
+import { Event } from '@/types/event'
 import dayjs from 'dayjs'
 import Image from 'next/image'
+import { useRouter } from 'next/navigation'
 
-const EventCard = ({ event }: { event: EventData }) => {
+const EventCard = ({ event }: { event: Event }) => {
+  const router = useRouter()
   return (
-    <Card className="flex-grow-0 flex-shrink-0">
+    <Card
+      className="flex-grow-0 flex-shrink-0 cursor-pointer"
+      onClick={() => {
+        router.push('/event/' + event.publicKey.toString())
+      }}
+    >
       <div className="h-[200px] bg-gray-100 rounded-t-lg flex-grow-0 flex-shrink-0 relative">
         <Image
           src="https://spaceholder.cc/i/300x200"
-          alt={event.title}
+          alt={event.account.title}
           className="w-full h-[200px] object-cover rounded-t-lg"
           layout="fill"
           objectFit="cover"
         />
       </div>
-      <CardHeader className="p-4">
-        <CardTitle className="text-lg font-semibold">{`${event.title}, ${event.location}`}</CardTitle>
+      <CardHeader className="p-4 flex flex-col space-y-0 pb-2">
+        <CardTitle className="text-lg font-semibold capitalize">{`${event.account.title}, ${event.account.location}`}</CardTitle>
         <CardDescription>
-          {dayjs(event.deadline.toNumber() * 1000).format('DD MM YYYY')}
+          {dayjs(event.account.deadline.toNumber() * 1000).format(
+            'DD MMM YYYY',
+          )}
         </CardDescription>
       </CardHeader>
       <CardContent className="p-4 pt-0 text-sm">
-        {event.description}
+        {event.account.description}
       </CardContent>
     </Card>
   )

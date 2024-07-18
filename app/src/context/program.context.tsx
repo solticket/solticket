@@ -16,6 +16,7 @@ export const ProgramContext = createContext({
   createEvent: (_data: EventData) => {},
   fetchEvents: () => {},
   fetchingEvents: false,
+  eventsLoaded: false,
 })
 
 export const ProgramProvider = ({
@@ -27,6 +28,8 @@ export const ProgramProvider = ({
   const wallet = useAnchorWallet() as AnchorWallet
   const [fetchingEvents, setFetchingEvents] = useState(false)
   const [events, setEvents] = useState<Event[]>([])
+  const [eventsLoaded, setEventsLoaded] = useState(false)
+
   const program = useMemo(() => {
     if (connection) {
       return getProgram(connection, (wallet ?? mockWallet()) as any)
@@ -34,11 +37,12 @@ export const ProgramProvider = ({
   }, [connection, wallet])
 
   const fetchEvents = async () => {
-    if (!program) return
+    if (!program || eventsLoaded) return
     setFetchingEvents(true)
     const events = await (program.account as any).event.all()
     setEvents(events)
     setFetchingEvents(false)
+    setEventsLoaded(true)
   }
 
   const createEvent = async (data: EventData) => {
@@ -71,6 +75,7 @@ export const ProgramProvider = ({
         createEvent,
         fetchEvents,
         fetchingEvents,
+        eventsLoaded,
       }}
     >
       {children}

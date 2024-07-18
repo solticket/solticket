@@ -24,7 +24,6 @@ const CreateEventForm = () => {
 
   const creerEvent = (e: any) => {
     e.preventDefault()
-    console.log(formData)
     const deadLine = new Date(formData.date)
     const eventData: EventData = {
       title: formData.title,
