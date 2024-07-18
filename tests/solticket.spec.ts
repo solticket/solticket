@@ -1,10 +1,7 @@
 import * as anchor from "@coral-xyz/anchor";
 import { Program } from "@coral-xyz/anchor";
-import { Keypair } from "@solana/web3.js";
 import * as chai from 'chai';
 import { Solticket } from "../target/types/solticket";
-
-
 
 describe("solticket", () => {
   const assert = chai.assert;
@@ -24,9 +21,7 @@ describe("solticket", () => {
 
     const eventCreator = programProvider.wallet;
     const eventKeypair = anchor.web3.Keypair.generate();
-    
-    console.log(eventCreator.publicKey + " "+ eventKeypair.publicKey  + " "+  program.programId);
-    
+        
     const txHash = await program.methods
       .createEvent(titre, description, location, category, votingDays, ticketCount)
       .accounts({

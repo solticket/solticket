@@ -5,57 +5,28 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
-import { useProgramContext } from "@/context/program.context";
-import { useEffect, useState } from "react";
+import { EventData } from "@/types/event";
+import dayjs from "dayjs";
+import Image from "next/image";
 
-const EventCard = ({ account, publicKey }) => {
-  const [timeEvent, setTimeEvent] = useState('');
-  const [eventOver, setEventOver] = useState(false);
-
-  useEffect(() => {
-    const deadline = account.deadline * 1000;
-    const updateTimer = () => {
-      const now = new Date().getTime();
-      const distance = deadline - now;
-
-      if (distance < 0) {
-        setTimeEvent('Event has ended.');
-        setEventOver(true);
-      } else {
-        const deadlineDate = new Date(deadline);
-        const month = deadlineDate.getMonth() + 1;
-        const year = deadlineDate.getFullYear();
-        const date = deadlineDate.getDate();
-        const hours = deadlineDate.getHours();
-        const minutes = deadlineDate.getMinutes();
-  
-
-        setTimeEvent(`${year}/${month}/${date} ${hours}h ${minutes}m`);
-      }
-    };
-
-    updateTimer();
-    const interval = setInterval(updateTimer, 1000);
-
-    return () => clearInterval(interval);
-  }, [account.eventDeadline]);
+const EventCard = ({ event }: { event: EventData}) => {
   return (
     <Card>
-      <div className="h-[200px]  bg-gray-100">
-        {/* <Image
-          src="https://source.unsplash.com/300x200/?music"
-          alt="event"
-          className="w-full h-[200px] object-cover"
-        /> */}
+      <div className="h-[200px] bg-gray-100 rounded-t-lg">
+        <Image
+          src="https://spaceholder.cc/i/300x200"
+          alt={event.title}
+          className="w-full h-[200px] object-cover rounded-t-lg"
+          width={300}
+          height={200}
+        />
       </div>
-      <CardHeader>
-        <CardTitle>{account.title}</CardTitle>
-        <CardDescription>{account.descritpion}</CardDescription>
-        <CardContent>Location: {account.location}</CardContent>
-        <CardDescription>{timeEvent}</CardDescription>
+      <CardHeader className="p-4">
+        <CardTitle className="text-lg font-semibold">{`${event.title}, ${event.location}`}</CardTitle>
+        <CardDescription>{dayjs(event.deadline).format('DD MM YYYY')}</CardDescription>
       </CardHeader>
-      <CardContent>
-        <p></p>
+      <CardContent className="p-4 pt-0 text-sm">
+        {event.description}
       </CardContent>
     </Card>
   );
