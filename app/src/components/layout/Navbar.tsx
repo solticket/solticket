@@ -24,14 +24,7 @@ const Navbar = () => {
             >
               {'Discover Events'}
             </Button>
-            <Button
-              variant={'secondary'}
-              onClick={() => {
-                router.push('/create-your-event')
-              }}
-            >
-              {'Create Your Event'}
-            </Button>
+
             <Button
               variant={'secondary'}
               onClick={() => {
@@ -39,6 +32,15 @@ const Navbar = () => {
               }}
             >
               {'My Tickets'}
+            </Button>
+
+            <Button
+              variant={'secondary'}
+              onClick={() => {
+                router.push('/create-event')
+              }}
+            >
+              {'Create Event'}
             </Button>
           </>
         )}
