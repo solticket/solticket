@@ -11,6 +11,7 @@ import {
 } from '@solana/wallet-adapter-react'
 import { useMemo } from 'react'
 import { clusterApiUrl } from '@solana/web3.js'
+import ModalContent from '../modal/ModalContent'
 
 const GlobalLayout = ({ children }: { children: React.ReactNode }) => {
   const network = WalletAdapterNetwork.Devnet
@@ -24,6 +25,7 @@ const GlobalLayout = ({ children }: { children: React.ReactNode }) => {
           <ProgramProvider>
             <div>{children}</div>
             <Footer />
+            <ModalContent />
           </ProgramProvider>
         </WalletModalProvider>
       </WalletProvider>

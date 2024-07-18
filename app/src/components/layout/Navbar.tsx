@@ -3,6 +3,7 @@ import Logo from '../layout/Logo'
 import { BaseWalletMultiButton } from '@solana/wallet-adapter-react-ui'
 import { useWallet } from '@solana/wallet-adapter-react'
 import { usePathname, useRouter } from 'next/navigation'
+import { useModalStore } from '../../stores/modal.store'
 
 // Ensure styles are loaded for wallet adapter UI components
 import '@solana/wallet-adapter-react-ui/styles.css'
@@ -12,6 +13,7 @@ const Navbar = () => {
   const { connected } = useWallet()
   const router = useRouter()
   const pathname = usePathname()
+  const { openModal } = useModalStore()
   return (
     <div className="h-[60px] bg-white w-full justify-between items-center flex px-8 flex-shrink-0 shadow-sm">
       <Logo />

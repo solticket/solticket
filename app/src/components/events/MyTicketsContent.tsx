@@ -9,7 +9,7 @@ const MyTicketsContent = () => {
   }
 
   return (
-    <div className="py-16 max-w-screen-lg m-auto">
+    <div className="py-16 max-w-screen-lg px-2 lg:px-0 m-auto">
       <h2 className="title">{'My Tickets'}</h2>
 
       <div className="mt-6">
