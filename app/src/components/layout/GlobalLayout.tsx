@@ -13,6 +13,7 @@ import { useMemo } from 'react'
 import { clusterApiUrl } from '@solana/web3.js'
 import ModalContent from '../modal/ModalContent'
 
+
 const GlobalLayout = ({ children }: { children: React.ReactNode }) => {
   const network = WalletAdapterNetwork.Devnet
   const endpoint = useMemo(() => clusterApiUrl(network), [network])
