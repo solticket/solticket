@@ -1,15 +1,16 @@
 'use client'
 
-import CreateEventForm from '@/components/events/CreateEventForm'
+import DiscoverEventsContent from '@/components/events/DiscoverEventsContent'
 import GlobalLayout from '@/components/layout/GlobalLayout'
 import Navbar from '@/components/layout/Navbar'
 
 const OrganizerPage = () => {
   return (
     <GlobalLayout>
-      <main className="flex flex-col items-center justify-between w-full">
+      <main className="main-container">
         <Navbar />
-        <CreateEventForm />
+
+        <DiscoverEventsContent />
       </main>
     </GlobalLayout>
   )
