@@ -1,6 +1,5 @@
 use anchor_lang::prelude::*;
-use anchor_spl::token::{TokenAccount, Token};
-
+use crate::state::{EventStatus, Category,CollectionStatus, NFTStatus};
 // Définition de la structure du NFT de billet de concert
 #[account]
 pub struct ConcertTicketNFT {
@@ -10,60 +9,39 @@ pub struct ConcertTicketNFT {
     pub seat_number: u16,        // Numéro de siège pour l'évènement
     pub is_used: bool,           // Indique si le billet a été utilisé
     pub metadata_uri: String,    // URI des métadonnées du NFT
-    pub collection: Pubkey,  
+    pub collection: Pubkey,      // Adresse de la collection à laquelle appartient ce NFT
+    pub status: NFTStatus,
+}
+
+// Définition de la structure de la collection de tickets
+#[account]
+pub struct TicketCollection {
+    pub authority: Pubkey,       // Autorité de la collection (organisateur de l'événement)
+    pub event: Pubkey,           // Adresse de l'événement associé
+    pub title: String,           // Titre de la collection
+    pub metadata_uri: String,    // URI des métadonnées de la collection
+    pub total_tickets: u32,      // Nombre total de tickets dans la collection
+    pub minted_tickets: u32,     // Nombre de tickets déjà mintés
+    pub status: CollectionStatus, 
+}
+
+// Structure pour les statistiques d'un événement
+#[derive(AnchorSerialize, AnchorDeserialize, Clone, Debug)]
+pub struct EventStats {
+    pub total_tickets: u32,
+    pub sold_tickets: u32,
+    pub used_tickets: u32,
+    pub total_revenue: u64,
 }
 
 #[account]
-pub struct TicketCollection {
+pub struct Event {
     pub authority: Pubkey,
-    pub event: Pubkey,
     pub title: String,
-    pub metadata_uri: String,
-}
-
-// Structure définissant les comptes nécessaires pour initialiser un NFT de billet
-#[derive(Accounts)]
-pub struct InitializeConcertTicket<'info> {
-    #[account(mut)]
-    pub authority: Signer<'info>,    // Le signataire qui initialise le NFT
-
-    // Compte PDA pour stocker les données du NFT
-    #[account(
-        init,
-        payer = authority,
-        space = 8 + 32 + 32 + 64 + 2 + 1 + 128,  // Espace alloué pour les données
-        seeds = [b"concert-ticket", authority.key().as_ref(), ticket_mint.key().as_ref()],
-        bump
-    )]
-    pub ticket_account: Account<'info, ConcertTicketNFT>,
-
-    pub ticket_mint: Account<'info, Mint>,  // Compte du mint du NFT
-
-    // Compte de token associé pour stocker le NFT
-    #[account(
-        init,
-        payer = authority,
-        associated_token::mint = ticket_mint,
-        associated_token::authority = authority
-    )]
-    pub token_account: Account<'info, TokenAccount>,
-
-    // Programmes requis
-    pub token_program: Program<'info, Token>,
-    pub system_program: Program<'info, System>,
-    pub rent: Sysvar<'info, Rent>,
-}
-
-impl<'info> InitializeConcertTicket<'info> {
-    // Fonction pour initialiser les données du NFT
-    pub fn initialize(&mut self, concert_name: String, seat_number: u16, metadata_uri: String) -> Result<()> {
-        let ticket = &mut self.ticket_account;
-        ticket.authority = self.authority.key();
-        ticket.ticket_mint = self.ticket_mint.key();
-        ticket.concert_name = concert_name;
-        ticket.seat_number = seat_number;
-        ticket.is_used = false;  // Initialement, le billet n'est pas utilisé
-        ticket.metadata_uri = metadata_uri;
-        Ok(())
-    }
+    pub description: String,
+    pub location: String,
+    pub category: Category,
+    pub deadline: u64,
+    pub ticket_count: u32,
+    pub status: EventStatus,
 }

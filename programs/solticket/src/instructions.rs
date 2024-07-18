@@ -1,6 +1,8 @@
 use anchor_lang::prelude::*;
 use std::str::FromStr;
-use crate::{state::EventStatus, state::Event, state::Category};
+use crate::models::Event;
+use crate::state::{EventStatus, Category};
+
 
 pub fn create_event(
     ctx: Context<CreateEvent>,
