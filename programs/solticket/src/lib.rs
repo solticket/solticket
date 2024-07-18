@@ -1,46 +1,40 @@
 use anchor_lang::prelude::*;
-use std::str::FromStr;
+
 declare_id!("Bn3L15y9EiCGkGYK3nu98jcqw6n8uTjoBWKeJna1eMdm");
 
-pub mod constants;
+pub mod state;
 pub mod errors;
 pub mod instructions;
-pub mod state;
+pub mod utils;
 
-use instructions::*;
+use crate::instructions::*;
+use crate::state::*;
+
 #[program]
 pub mod solticket {
-
-    use state::Category;
-
     use super::*;
 
-    pub fn create_event(
-        ctx: Context<CreateEvent>,
-        title: String,
-        description: String,
-        location: String,
-        _category: String,
-        deadline: u64,
-        ticket_count: u32,
-    ) -> Result<()> {
-        let category_enum = Category::from_str("VIRTUAL").unwrap();
-        instructions::create_event(
-            ctx,
-            title,
-            description,
-            location,
-            category_enum,
-            deadline,
-            ticket_count,
-        )
+    pub fn create_event(ctx: Context<CreateEvent>, event_data: EventData) -> Result<()> {
+        instructions::create_event::create_event(ctx, event_data)
     }
 
-    pub fn update_status_event(ctx: Context<UpdateEvent>, status: String) -> Result<()> {
-        instructions::update_status_event(ctx, status)
+    pub fn update_event_status(ctx: Context<UpdateEventStatus>, new_status: EventStatus) -> Result<()> {
+        instructions::update_event_status::update_event_status(ctx, new_status)
     }
 
-    pub fn update_status_deadline(ctx: Context<UpdateEvent>, deadline: u64) -> Result<()> {
-        instructions::update_deadline_event(ctx, deadline)
+    pub fn mint_ticket_nft(ctx: Context<MintTicketNFT>, seat_number: u16) -> Result<()> {
+        instructions::mint_ticket_nft::mint_ticket_nft(ctx, seat_number)
+    }
+
+    pub fn transfer_ticket(ctx: Context<TransferTicket>) -> Result<()> {
+        instructions::transfer_ticket::transfer_ticket(ctx)
+    }
+
+    pub fn use_ticket(ctx: Context<UseTicket>) -> Result<()> {
+        instructions::use_ticket::use_ticket(ctx)
+    }
+
+    pub fn burn_ticket(ctx: Context<BurnTicket>) -> Result<()> {
+        instructions::burn_ticket::burn_ticket(ctx)
     }
 }
