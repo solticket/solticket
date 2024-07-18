@@ -2,9 +2,10 @@ import { Button } from '../ui/button'
 import Logo from '../layout/Logo'
 import { BaseWalletMultiButton } from '@solana/wallet-adapter-react-ui'
 import { useWallet } from '@solana/wallet-adapter-react'
+import { useRouter } from 'next/navigation'
+
 // Ensure styles are loaded for wallet adapter UI components
 import '@solana/wallet-adapter-react-ui/styles.css'
-import { useRouter } from 'next/navigation'
 
 const Navbar = () => {
   const router = useRouter()
@@ -18,12 +19,27 @@ const Navbar = () => {
             <Button
               variant={'secondary'}
               onClick={() => {
+                router.push('/discover-events')
+              }}
+            >
+              {'Discover Events'}
+            </Button>
+            <Button
+              variant={'secondary'}
+              onClick={() => {
                 router.push('/create-your-event')
               }}
             >
               {'Create Your Event'}
             </Button>
-            <Button variant={'secondary'}>{'My Events'}</Button>
+            <Button
+              variant={'secondary'}
+              onClick={() => {
+                router.push('/my-tickets')
+              }}
+            >
+              {'My Tickets'}
+            </Button>
           </>
         )}
 

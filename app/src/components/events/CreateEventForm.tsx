@@ -3,6 +3,7 @@ import { Button } from '../ui/button'
 
 const CreateEventForm = () => {
   const { createEvent } = useProgramContext()
+
   return (
     <div>
       <Button
