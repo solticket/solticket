@@ -11,7 +11,7 @@ const Hero = () => {
       }}
     >
       <div className="z-40">
-        <h2 className="text-4xl font-bold text-center mt-4 text-white">
+        <h2 className="text-5xl font-bold text-center mt-4 text-white">
           {"Experience the Future of  Event Ticketing"}
         </h2>
 
