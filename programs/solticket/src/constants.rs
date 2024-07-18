@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 use anchor_lang::prelude::*;
 use std::str::FromStr;
 
@@ -27,3 +28,6 @@ impl FromStr for Category {
         }
     }
 }
+=======
+
+>>>>>>> main

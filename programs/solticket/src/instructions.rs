@@ -1,8 +1,12 @@
 use anchor_lang::prelude::*;
 use std::str::FromStr;
+<<<<<<< HEAD
 use crate::models::Event;
 use crate::state::{EventStatus, Category};
 
+=======
+use crate::{state::EventStatus, state::Event, state::Category};
+>>>>>>> main
 
 pub fn create_event(
     ctx: Context<CreateEvent>,
@@ -59,4 +63,8 @@ pub struct UpdateEvent<'info> {
     #[account(mut, has_one = authority)]
     pub event: Account<'info, Event>,
     pub authority: Signer<'info>,
+<<<<<<< HEAD
 }
+=======
+}
+>>>>>>> main
