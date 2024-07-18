@@ -1,4 +1,4 @@
-import { createContext, useContext, useEffect, useMemo, useState } from 'react'
+import { createContext, useContext, useMemo, useState } from 'react'
 import {
   AnchorWallet,
   useAnchorWallet,
@@ -33,16 +33,10 @@ export const ProgramProvider = ({
     }
   }, [connection, wallet])
 
-  useEffect(() => {
-    fetchEvents();
-  }, [program]);
-
- 
-
   const fetchEvents = async () => {
     if (!program) return
     setFetchingEvents(true)
-    const events = await (program.account as any).event.all();
+    const events = await (program.account as any).event.all()
     setEvents(events)
     setFetchingEvents(false)
   }
@@ -52,7 +46,8 @@ export const ProgramProvider = ({
     const eventKeypair = Keypair.generate()
     if (!program) return
     await program.methods
-      .createEvent(data.title,
+      .createEvent(
+        data.title,
         data.description,
         data.location,
         data.category,
