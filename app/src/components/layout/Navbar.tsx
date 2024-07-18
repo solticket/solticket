@@ -2,14 +2,16 @@ import { Button } from '../ui/button'
 import Logo from '../layout/Logo'
 import { BaseWalletMultiButton } from '@solana/wallet-adapter-react-ui'
 import { useWallet } from '@solana/wallet-adapter-react'
-import { useRouter } from 'next/navigation'
+import { usePathname, useRouter } from 'next/navigation'
 
 // Ensure styles are loaded for wallet adapter UI components
 import '@solana/wallet-adapter-react-ui/styles.css'
+import { cn } from '@/lib/utils'
 
 const Navbar = () => {
   const { connected } = useWallet()
   const router = useRouter()
+  const pathname = usePathname()
   return (
     <div className="h-[60px] bg-white w-full justify-between items-center flex px-8 flex-shrink-0 shadow-sm">
       <Logo />
@@ -18,6 +20,11 @@ const Navbar = () => {
           <>
             <Button
               variant={'secondary'}
+              className={cn('border-b-4 border-transparent rounded-none', {
+                'border-primary':
+                  pathname === '/discover-events' ||
+                  pathname.startsWith('/event'),
+              })}
               onClick={() => {
                 router.push('/discover-events')
               }}
@@ -27,6 +34,9 @@ const Navbar = () => {
 
             <Button
               variant={'secondary'}
+              className={cn('border-b-4 border-transparent rounded-none', {
+                'border-primary': pathname === '/my-tickets',
+              })}
               onClick={() => {
                 router.push('/my-tickets')
               }}
@@ -36,6 +46,9 @@ const Navbar = () => {
 
             <Button
               variant={'secondary'}
+              className={cn('border-b-4 border-transparent rounded-none', {
+                'border-primary': pathname === '/create-event',
+              })}
               onClick={() => {
                 router.push('/create-event')
               }}
