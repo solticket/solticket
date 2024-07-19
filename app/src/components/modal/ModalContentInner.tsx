@@ -3,7 +3,6 @@ import { useModalStore } from '../../stores/modal.store'
 
 const ModalContentInner = () => {
   const { modalData, modalType } = useModalStore()
-  console.log('🚀🚀🚀 ~ ModalContentInner ~ modalData:', modalData, modalType)
 
   switch (modalType) {
     case 'create-event':
