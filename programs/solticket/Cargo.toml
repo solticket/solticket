@@ -1,7 +1,7 @@
 [package]
 name = "solticket"
 version = "0.1.0"
-description = "Created with Anchor"
+description = "A Solana program for NFT-based event ticketing"
 edition = "2021"
 
 [lib]
@@ -9,15 +9,22 @@ crate-type = ["cdylib", "lib"]
 name = "solticket"
 
 [features]
-default = []
-cpi = ["no-entrypoint"]
 no-entrypoint = []
 no-idl = []
 no-log-ix-name = []
-idl-build = ["anchor-lang/idl-build"]
+cpi = ["no-entrypoint"]
+default = []
+idl-build = ["anchor-lang/idl-build", "anchor-spl/idl-build"]
 
 [dependencies]
-anchor-lang = "0.30.1"
-solana-program = "=1.18.18"
+anchor-lang = "0.30.0"
+anchor-spl = "0.30.0"
+solana-program = "1.18.0"
+# mpl-token-metadata = "4.0.0"
 strum = "0.26"
 strum_macros = "0.26"
+
+[dev-dependencies]
+anchor-client = "0.30.0"
+solana-sdk = "1.18.0"
+tokio = { version = "1.14", features = ["full"] }
