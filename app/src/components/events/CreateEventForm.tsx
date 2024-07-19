@@ -23,8 +23,33 @@ import { Input } from '../ui/input'
 import { z } from 'zod'
 import { Button } from '../ui/button'
 import { useModalStore } from '@/stores/modal.store'
+import { useState } from 'react'
+
+const convertToBase64 = (file: File) => {
+  return new Promise((resolve, reject) => {
+    const fileReader = new FileReader()
+    fileReader.readAsDataURL(file)
+
+    fileReader.onload = () => {
+      if (!fileReader.result) {
+        reject('Failed to read file')
+      }
+
+      const [_t, base64] = (fileReader.result as string).split(',')
+
+      resolve(base64)
+    }
+
+    fileReader.onerror = (error) => {
+      reject(error)
+    }
+  })
+}
 
 const CreateEventForm = () => {
+  const [imageUrl, setImageUrl] = useState<string | null>(
+    'https://spaceholder.cc/i/300x200',
+  )
   const { closeModal } = useModalStore()
   const form = useForm({
     resolver: zodResolver(createEventSchema),
@@ -33,21 +58,40 @@ const CreateEventForm = () => {
       description: '',
       date: '',
       location: '',
-      count: 0,
+      totalSeats: 0,
+      image: null as null | File,
     },
   })
 
   const { createEvent } = useProgramContext()
 
   const onSubmit = async (values: z.infer<typeof createEventSchema>) => {
-    const eventData = {
-      ...values,
-      startDate: new BN(new Date(values.date).getTime() / 1000),
+    await createEvent({
+      title: values.title,
+      description: values.description,
+      location: values.location,
       category: 'VIRTUAL',
-      // image: 'https://spaceholder.cc/i/400x400',
-    }
-    await createEvent(eventData)
+      startDate: new BN(new Date(values.date).getTime() / 1000),
+      totalSeats: values.totalSeats,
+      imageUrl: imageUrl ?? 'https://spaceholder.cc/i/300x200',
+    })
     closeModal()
+  }
+
+  const handleFileChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0]
+
+    if (!file) return
+    const base64 = await convertToBase64(file)
+
+    const response = await fetch('/api/upload-image', {
+      method: 'POST',
+      body: JSON.stringify({ image: base64 }),
+    })
+
+    const { url } = await response.json()
+
+    setImageUrl(url)
   }
 
   return (
@@ -115,7 +159,25 @@ const CreateEventForm = () => {
 
               <FormField
                 control={form.control}
-                name="count"
+                name="image"
+                render={() => (
+                  <FormItem>
+                    <FormLabel>{'Image'}</FormLabel>
+                    <FormControl>
+                      <Input
+                        type="file"
+                        placeholder="Image"
+                        onChange={handleFileChange}
+                      />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+
+              <FormField
+                control={form.control}
+                name="totalSeats"
                 render={({ field }) => (
                   <FormItem>
                     <FormLabel>{'Total seats'}</FormLabel>

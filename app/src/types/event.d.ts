@@ -7,9 +7,8 @@ export type EventData = {
   category: string
   location: string
   startDate: BN
-  count: number
   totalSeats: number
-  imageUrl: string
+  imageUrl
 }
 
 export type Event = {

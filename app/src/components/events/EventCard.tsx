@@ -2,6 +2,7 @@ import {
   Card,
   CardContent,
   CardDescription,
+  CardFooter,
   CardHeader,
   CardTitle,
 } from '@/components/ui/card'
@@ -9,6 +10,7 @@ import { Event } from '@/types/event'
 import dayjs from 'dayjs'
 import Image from 'next/image'
 import { useRouter } from 'next/navigation'
+import { Button } from '../ui/button'
 
 const EventCard = ({ event }: { event: Event }) => {
   console.log('🚀🚀🚀 ~ EventCard ~ event:', event)
@@ -40,6 +42,9 @@ const EventCard = ({ event }: { event: Event }) => {
       <CardContent className="p-4 pt-0 text-sm">
         {event.account.description}
       </CardContent>
+      <CardFooter className="px-4 pt-0">
+        <Button>{'See more'}</Button>
+      </CardFooter>
     </Card>
   )
 }

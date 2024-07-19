@@ -9,3 +9,4 @@ app/.local_keys
 .env
 wallet.json
 .wallet
+.local_keys

@@ -56,7 +56,8 @@ export const ProgramProvider = ({
         data.location,
         data.category,
         data.startDate,
-        data.count,
+        data.totalSeats,
+        data.imageUrl,
       )
       .accounts({
         event: eventKeypair.publicKey,
