@@ -23,7 +23,7 @@ pub struct CreateEvent<'info> {
 
 pub fn create_event(ctx: Context<CreateEvent>, event_data: EventData) -> Result<()> {
     let event = &mut ctx.accounts.event;
-    let collection = &mut ctx.accounts.collection;
+    // let collection = &mut ctx.accounts.collection;
 
     event.authority = ctx.accounts.authority.key();
     event.title = event_data.title;
@@ -32,14 +32,9 @@ pub fn create_event(ctx: Context<CreateEvent>, event_data: EventData) -> Result<
     event.category = event_data.category;
     event.deadline = event_data.deadline;
     event.ticket_count = event_data.ticket_count;
-    event.status = EventStatus::CREATE;
-    event.collection = collection.key();
+    // event.minted_count = 0;
 
-    collection.event = event.key();
-    collection.authority = ctx.accounts.authority.key();
-    collection.total_supply = event_data.ticket_count;
-    collection.minted_count = 0;
-    collection.status = CollectionStatus::CREATED;
+
 
     Ok(())
 }

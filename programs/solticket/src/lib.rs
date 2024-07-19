@@ -18,23 +18,22 @@ pub mod solticket {
         instructions::create_event::create_event(ctx, event_data)
     }
 
-    pub fn update_event_status(ctx: Context<UpdateEventStatus>, new_status: EventStatus) -> Result<()> {
-        instructions::update_event_status::update_event_status(ctx, new_status)
+
+    pub fn mint_ticket_nft(ctx: Context<MintTicketNFT>) -> Result<()> {
+        instructions::mint_ticket_nft::mint_ticket_nft(ctx)
     }
 
-    pub fn mint_ticket_nft(ctx: Context<MintTicketNFT>, seat_number: u16) -> Result<()> {
-        instructions::mint_ticket_nft::mint_ticket_nft(ctx, seat_number)
-    }
-
-    pub fn transfer_ticket(ctx: Context<TransferTicket>) -> Result<()> {
-        instructions::transfer_ticket::transfer_ticket(ctx)
-    }
+    // pub fn transfer_ticket(ctx: Context<TransferTicket>) -> Result<()> {
+    //     instructions::transfer_ticket::transfer_ticket(ctx)
+    // }
 
     pub fn use_ticket(ctx: Context<UseTicket>) -> Result<()> {
         instructions::use_ticket::use_ticket(ctx)
     }
 
-    pub fn burn_ticket(ctx: Context<BurnTicket>) -> Result<()> {
-        instructions::burn_ticket::burn_ticket(ctx)
-    }
+    // pub fn get_user_tickets(ctx: Context<GetUserTickets>) -> Result<Vec<TicketInfo>> {
+    //     instructions::get_user_tickets::get_user_tickets(ctx)
+    // }
 }
+
+

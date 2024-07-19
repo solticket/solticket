@@ -1,44 +1,60 @@
-use anchor_lang::prelude::*;
-use anchor_spl::token::{self, Token, TokenAccount};
+// use anchor_lang::prelude::*;
+// use anchor_spl::token::{self, Token, TokenAccount};
+// // use crate::state::*;
 
-use crate::state::*;
-// use crate::errors::ErrorCode;
+// #[derive(Accounts)]
+// pub struct TransferTicket<'info> {
+//     #[account(mut)]
+//     pub from: Signer<'info>,
+//     /// CHECK: This is safe as we're only transferring to this account
+//     pub to: AccountInfo<'info>,
+//     #[account(mut)]
+//     pub ticket: Account<'info, Ticket>,
+//     #[account(mut)]
+//     pub from_token_account: Account<'info, TokenAccount>,
+//     #[account(mut)]
+//     pub to_token_account: Account<'info, TokenAccount>,
+//     pub token_program: Program<'info, Token>,
+// }
 
-#[derive(Accounts)]
-pub struct TransferTicket<'info> {
-    #[account(mut)]
-    pub ticket_nft: Account<'info, TicketNFT>,
-    #[account(mut)]
-    pub from: Signer<'info>,
-    /// CHECK: This is safe as we're only transferring to this account
-    pub to: AccountInfo<'info>,
-    #[account(mut)]
-    pub from_token_account: Account<'info, TokenAccount>,
-    #[account(mut)]
-    pub to_token_account: Account<'info, TokenAccount>,
-    pub token_program: Program<'info, Token>,
-}
+// pub fn handler(ctx: Context<TransferTicket>) -> Result<()> {
+//     let from = &ctx.accounts.from;
+//     let to = &ctx.accounts.to;
+//     let ticket = &mut ctx.accounts.ticket;
 
-pub fn transfer_ticket(ctx: Context<TransferTicket>) -> Result<()> {
-    let ticket_nft = &mut ctx.accounts.ticket_nft;
+//     // Vérifier que le sender est bien le propriétaire du ticket
+//     require!(ticket.owner == *from.key, ErrorCode::NotTicketOwner);
 
-    // require!(ticket_nft.owner == ctx.accounts.from.key(), ErrorCode::NotTicketOwner);
-    // require!(ticket_nft.status == NFTStatus::MINTED, ErrorCode::TicketNotTransferable);
+//     // Vérifier que le ticket est transférable
+//     // require!(ticket.status == TicketStatus::Active, ErrorCode::TicketNotTransferable);
 
-    token::transfer(
-        CpiContext::new(
-            ctx.accounts.token_program.to_account_info(),
-            token::Transfer {
-                from: ctx.accounts.from_token_account.to_account_info(),
-                to: ctx.accounts.to_token_account.to_account_info(),
-                authority: ctx.accounts.from.to_account_info(),
-            },
-        ),
-        1,
-    )?;
+//     // Transférer le token SPL
+//     let cpi_accounts = token::Transfer {
+//         from: ctx.accounts.from_token_account.to_account_info(),
+//         to: ctx.accounts.to_token_account.to_account_info(),
+//         authority: from.to_account_info(),
+//     };
+//     let cpi_program = ctx.accounts.token_program.to_account_info();
+//     let cpi_ctx = CpiContext::new(cpi_program, cpi_accounts);
+//     token::transfer(cpi_ctx, 1)?;
 
-    ticket_nft.owner = ctx.accounts.to.key();
-    ticket_nft.status = NFTStatus::TRANSFERRED;
+//     // Mettre à jour le propriétaire du ticket
+//     ticket.owner = *to.key;
+//     // ticket.status = TicketStatus::Transferred;
 
-    Ok(())
-}
+//     // Émettre un événement de transfert si nécessaire
+//     emit!(TicketTransferred {
+//         ticket_id: ticket.ticket_id,
+//         from: *from.key,
+//         to: *to.key,
+//     });
+
+//     Ok(())
+// }
+
+// #[event]
+// pub struct TicketTransferred {
+//     pub ticket_id: Pubkey,
+//     pub from: Pubkey,
+//     pub to: Pubkey,
+// }

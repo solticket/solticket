@@ -1,21 +1,26 @@
 use anchor_lang::prelude::*;
 
-#[error_code]
-pub enum ErrorCode {
-    #[msg("L'événement n'est pas en vente")]
+#[error_code]pub enum ErrorCode {
+    #[msg("The event is not on sale")]
     EventNotOnSale,
-    #[msg("Tous les billets ont été vendus")]
+    #[msg("All tickets have been sold out")]
     SoldOut,
-    #[msg("Vous n'êtes pas le propriétaire de ce billet")]
+    #[msg("You are not the owner of this ticket")]
     NotTicketOwner,
-    #[msg("Le billet n'est pas transférable")]
+    #[msg("The ticket is not transferable")]
     TicketNotTransferable,
-    #[msg("L'événement n'est pas en cours")]
+    #[msg("The event is not running")]
     EventNotRunning,
-    #[msg("Le billet a déjà été utilisé")]
+    #[msg("The ticket has already been used")]
     TicketAlreadyUsed,
-    #[msg("Le billet a déjà été brûlé")]
+    #[msg("The ticket has already been burned")]
     TicketAlreadyBurned,
-    #[msg("Transition de statut d'événement invalide")]
-    InvalidStatusTransition,
+    #[msg("Invalid event status transition")] 
+    InvalidStatusTransition, 
+    #[msg("Invalid Mint Event Deadline Passed")]
+    EventDeadlinePassed, 
+    #[msg("Only the owner can sign")]
+    Unauthorized, 
 }
+
+

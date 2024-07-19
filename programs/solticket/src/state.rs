@@ -2,15 +2,6 @@ use anchor_lang::prelude::*;
 use strum_macros::EnumString;
 
 #[derive(AnchorSerialize, AnchorDeserialize, Clone, EnumString, PartialEq)]
-pub enum EventStatus {
-    CREATE,
-    SALE,
-    RUN,
-    CLOSED,
-    CANCELLED
-}
-
-#[derive(AnchorSerialize, AnchorDeserialize, Clone, EnumString, PartialEq)]
 pub enum Category {
     PHYSICAL, 
     VIRTUAL
@@ -41,9 +32,8 @@ pub struct Event {
     pub description: String,
     pub location: String,
     pub category: Category,
-    pub deadline: u64,
+    pub deadline: i64,
     pub ticket_count: u32,
-    pub status: EventStatus,
     pub collection: Pubkey,
 }
 
@@ -73,6 +63,6 @@ pub struct EventData {
     pub description: String,
     pub location: String,
     pub category: Category,
-    pub deadline: u64,
+    pub deadline: i64,
     pub ticket_count: u32,
 }
