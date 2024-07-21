@@ -13,7 +13,6 @@ import { useRouter } from 'next/navigation'
 import { Button } from '../ui/button'
 
 const EventCard = ({ event }: { event: Event }) => {
-  console.log('🚀🚀🚀 ~ EventCard ~ event:', event)
   const router = useRouter()
   return (
     <Card

@@ -2,6 +2,7 @@ declare_id!("2dVsKN5P2MsByA5pWCxJvBfTLjCb2L1m1rPmHKDu3HgS");
 
 use anchor_lang::prelude::*;
 use std::str::FromStr;
+
 pub mod constants;
 pub mod errors;
 pub mod instructions;
@@ -44,5 +45,9 @@ pub mod solticket {
 
     pub fn update_start_date_event(ctx: Context<UpdateEvent>, deadline: u64) -> Result<()> {
         instructions::update_start_date_event(ctx, deadline)
+    }
+
+    pub fn mint_ticket(ctx: Context<MintTicket>, event_id: u64) -> Result<()> {
+        instructions::mint_ticket(ctx, event_id)
     }
 }
