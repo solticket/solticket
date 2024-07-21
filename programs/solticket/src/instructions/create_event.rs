@@ -30,7 +30,7 @@ pub fn create_event(ctx: Context<CreateEvent>, event_data: EventData) -> Result<
     event.location = event_data.location;
     event.category = event_data.category;
     event.start_date = event_data.start_date;
-    event.ticket_count = event_data.ticket_count;
+    event.total_seats = event_data.total_seats;
 
     Ok(())
 }

@@ -24,6 +24,7 @@ pub struct Event {
     pub location: String,
     pub category: Category,
     pub start_date: u64,
-    pub ticket_count: u32,
+    pub total_seats: u32,
     pub status: EventStatus,
+    pub image_url: String,
 }

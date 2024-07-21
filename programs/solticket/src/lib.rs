@@ -1,7 +1,7 @@
-use anchor_lang::prelude::*;
-use std::str::FromStr;
 declare_id!("Bn3L15y9EiCGkGYK3nu98jcqw6n8uTjoBWKeJna1eMdm");
 
+use anchor_lang::prelude::*;
+use std::str::FromStr;
 pub mod constants;
 pub mod errors;
 pub mod instructions;
@@ -22,7 +22,8 @@ pub mod solticket {
         location: String,
         _category: String,
         deadline: u64,
-        ticket_count: u32,
+        total_seats: u32,
+        image_url: String,
     ) -> Result<()> {
         let category_enum = Category::from_str("VIRTUAL").unwrap();
         instructions::create_event(
@@ -32,7 +33,8 @@ pub mod solticket {
             location,
             category_enum,
             deadline,
-            ticket_count,
+            total_seats,
+            image_url,
         )
     }
 
