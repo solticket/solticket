@@ -55,7 +55,7 @@ export const ProgramProvider = ({
         data.description,
         data.location,
         data.category,
-        data.deadline,
+        data.startDate,
         data.count,
       )
       .accounts({

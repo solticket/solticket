@@ -6,8 +6,10 @@ export type EventData = {
   description: string
   category: string
   location: string
-  deadline: BN
+  startDate: BN
   count: number
+  totalSeats: number
+  imageUrl: string
 }
 
 export type Event = {

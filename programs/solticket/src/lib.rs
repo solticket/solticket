@@ -21,7 +21,7 @@ pub mod solticket {
         description: String,
         location: String,
         _category: String,
-        deadline: u64,
+        start_date: u64,
         total_seats: u32,
         image_url: String,
     ) -> Result<()> {
@@ -32,7 +32,7 @@ pub mod solticket {
             description,
             location,
             category_enum,
-            deadline,
+            start_date,
             total_seats,
             image_url,
         )

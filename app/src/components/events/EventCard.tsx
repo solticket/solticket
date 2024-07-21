@@ -11,6 +11,7 @@ import Image from 'next/image'
 import { useRouter } from 'next/navigation'
 
 const EventCard = ({ event }: { event: Event }) => {
+  console.log('🚀🚀🚀 ~ EventCard ~ event:', event)
   const router = useRouter()
   return (
     <Card
@@ -31,7 +32,7 @@ const EventCard = ({ event }: { event: Event }) => {
       <CardHeader className="p-4 flex flex-col space-y-0 pb-2">
         <CardTitle className="text-lg font-semibold capitalize">{`${event.account.title}, ${event.account.location}`}</CardTitle>
         <CardDescription>
-          {dayjs(event.account.deadline.toNumber() * 1000).format(
+          {dayjs(event.account.startDate.toNumber() * 1000).format(
             'DD MMM YYYY',
           )}
         </CardDescription>

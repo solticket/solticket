@@ -42,7 +42,7 @@ const CreateEventForm = () => {
   const onSubmit = async (values: z.infer<typeof createEventSchema>) => {
     const eventData = {
       ...values,
-      deadline: new BN(new Date(values.date).getTime() / 1000),
+      startDate: new BN(new Date(values.date).getTime() / 1000),
       category: 'VIRTUAL',
       // image: 'https://spaceholder.cc/i/400x400',
     }
