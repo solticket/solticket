@@ -118,7 +118,7 @@ const CreateEventForm = () => {
                 name="count"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel>{'Number of places'}</FormLabel>
+                    <FormLabel>{'Total seats'}</FormLabel>
                     <FormControl>
                       <Input
                         type="number"

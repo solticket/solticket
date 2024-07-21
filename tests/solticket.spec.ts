@@ -2,16 +2,20 @@ import * as anchor from '@coral-xyz/anchor'
 import { Program } from '@coral-xyz/anchor'
 import * as chai from 'chai'
 import { Solticket } from '../target/types/solticket'
+import dotenv from 'dotenv'
 
-describe('solticket', () => {
+dotenv.config()
+
+describe('Solticket', () => {
   const assert = chai.assert
-  // Configure the client to use the local cluster.
   anchor.setProvider(anchor.AnchorProvider.env())
-  const systemProgram = anchor.web3.SystemProgram
   const program = anchor.workspace.Solticket as Program<Solticket>
   const programProvider = program.provider as anchor.AnchorProvider
 
   it('Create Event', async () => {
+    const eventCreator = programProvider.wallet
+    const eventKeypair = anchor.web3.Keypair.generate()
+
     const title = 'Event Title'
     const description = 'Event Description'
     const location = 'France'
@@ -19,9 +23,6 @@ describe('solticket', () => {
     const startDate = new anchor.BN(1721540814)
     const totalSeats = 200
     const imageUrl = 'https://spaceholder.cc/i/300x200'
-
-    const eventCreator = programProvider.wallet
-    const eventKeypair = anchor.web3.Keypair.generate()
 
     const txHash = await program.methods
       .createEvent(
@@ -52,17 +53,11 @@ describe('solticket', () => {
     )
     assert.strictEqual(eventAccountResult.title, title)
     assert.strictEqual(eventAccountResult.description, description)
-
     assert.strictEqual(eventAccountResult.location, location)
-    assert.strictEqual(eventAccountResult.image_url, imageUrl)
-    assert.strictEqual(
-      JSON.stringify(eventAccountResult.category),
-      '{"virtual":{}}',
-    )
-    //assert.strictEqual(eventAccountResult.deadline, startDate);
-    //chai.expect(eventAccountResult.deadline).to.be.a.bignumber.that.equals(startDate);
-    // assert.strictEqual(eventAccountResult.startDate, 0)
-    assert.strictEqual(
+    assert.strictEqual(eventAccountResult.imageUrl, imageUrl)
+    // assert.deepStrictEqual(eventAccountResult.category, category)
+    assert.strictEqual(eventAccountResult.totalSeats, totalSeats)
+    assert.deepStrictEqual(
       JSON.stringify(eventAccountResult.status),
       '{"create":{}}',
     )

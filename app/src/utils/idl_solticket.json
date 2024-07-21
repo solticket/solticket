@@ -1,5 +1,5 @@
 {
-  "address": "Bn3L15y9EiCGkGYK3nu98jcqw6n8uTjoBWKeJna1eMdm",
+  "address": "2dVsKN5P2MsByA5pWCxJvBfTLjCb2L1m1rPmHKDu3HgS",
   "metadata": {
     "name": "solticket",
     "version": "0.1.0",
@@ -57,22 +57,26 @@
           "type": "u64"
         },
         {
-          "name": "ticket_count",
+          "name": "total_seats",
           "type": "u32"
+        },
+        {
+          "name": "image_url",
+          "type": "string"
         }
       ]
     },
     {
-      "name": "update_status_deadline",
+      "name": "update_start_date_event",
       "discriminator": [
-        145,
-        5,
+        208,
         165,
-        0,
-        93,
-        242,
-        34,
-        150
+        252,
+        26,
+        87,
+        1,
+        171,
+        18
       ],
       "accounts": [
         {
@@ -187,11 +191,11 @@
             }
           },
           {
-            "name": "deadline",
+            "name": "start_date",
             "type": "u64"
           },
           {
-            "name": "ticket_count",
+            "name": "total_seats",
             "type": "u32"
           },
           {
@@ -201,6 +205,10 @@
                 "name": "EventStatus"
               }
             }
+          },
+          {
+            "name": "image_url",
+            "type": "string"
           }
         ]
       }

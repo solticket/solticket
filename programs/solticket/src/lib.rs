@@ -1,4 +1,4 @@
-declare_id!("Bn3L15y9EiCGkGYK3nu98jcqw6n8uTjoBWKeJna1eMdm");
+declare_id!("2dVsKN5P2MsByA5pWCxJvBfTLjCb2L1m1rPmHKDu3HgS");
 
 use anchor_lang::prelude::*;
 use std::str::FromStr;
