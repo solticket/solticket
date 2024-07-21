@@ -8,7 +8,7 @@ pub fn create_event(
     description: String,
     location: String,
     category: Category,
-    deadline: u64,
+    start_date: u64,
     ticket_count: u32,
 ) -> Result<()> {
     let event_account = &mut ctx.accounts.event;
@@ -17,7 +17,7 @@ pub fn create_event(
     event_account.description = description;
     event_account.location = location;
     event_account.category = category;
-    event_account.deadline = deadline;
+    event_account.start_date = start_date;
     event_account.ticket_count = ticket_count;
     event_account.status = EventStatus::CREATE;
 
@@ -35,10 +35,10 @@ pub fn update_status_event(
     Ok(())
 }
 
-pub fn update_deadline_event(ctx: Context<UpdateEvent>, deadline: u64) -> Result<()> {
+pub fn update_start_date_event(ctx: Context<UpdateEvent>, start_date: u64) -> Result<()> {
     let event_account = &mut ctx.accounts.event;
 
-    event_account.deadline = deadline;
+    event_account.start_date = start_date;
 
     Ok(())
 }

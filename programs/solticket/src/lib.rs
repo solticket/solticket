@@ -40,7 +40,7 @@ pub mod solticket {
         instructions::update_status_event(ctx, status)
     }
 
-    pub fn update_status_deadline(ctx: Context<UpdateEvent>, deadline: u64) -> Result<()> {
-        instructions::update_deadline_event(ctx, deadline)
+    pub fn update_start_date_event(ctx: Context<UpdateEvent>, deadline: u64) -> Result<()> {
+        instructions::update_start_date_event(ctx, deadline)
     }
 }

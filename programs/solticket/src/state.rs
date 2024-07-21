@@ -7,15 +7,13 @@ pub enum EventStatus {
     SALE,
     RUN,
     CLOSED,
-    CANCELLED
+    CANCELLED,
 }
-
-
 
 #[derive(AnchorSerialize, AnchorDeserialize, Clone, EnumString)]
 pub enum Category {
-    PHYSICAL, 
-    VIRTUAL
+    PHYSICAL,
+    VIRTUAL,
 }
 
 #[account]
@@ -25,7 +23,7 @@ pub struct Event {
     pub description: String,
     pub location: String,
     pub category: Category,
-    pub deadline: u64,
+    pub start_date: u64,
     pub ticket_count: u32,
     pub status: EventStatus,
 }
