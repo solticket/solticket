@@ -5,10 +5,10 @@ resolution = true
 skip-lint = false
 
 [programs.localnet]
-solticket = "Bn3L15y9EiCGkGYK3nu98jcqw6n8uTjoBWKeJna1eMdm"
+solticket = "DGHh1S6VCBmgY4R3Upm6wqV2ADTgEqPvYfgwBqxEW82e"
 
 [programs.devnet]
-solticket = "Bn3L15y9EiCGkGYK3nu98jcqw6n8uTjoBWKeJna1eMdm"
+solticket = "DGHh1S6VCBmgY4R3Upm6wqV2ADTgEqPvYfgwBqxEW82e"
 
 [registry]
 url = "https://api.apr.dev"

@@ -1,30 +1,6 @@
 use anchor_lang::prelude::*;
 use strum_macros::EnumString;
 
-#[derive(AnchorSerialize, AnchorDeserialize, Clone, EnumString, PartialEq)]
-pub enum Category {
-    PHYSICAL, 
-    VIRTUAL
-}
-
-#[derive(AnchorSerialize, AnchorDeserialize, Clone, EnumString, PartialEq)]
-pub enum CollectionStatus {
-    CREATED,
-    ACTIVE,
-    PAUSED,
-    COMPLETED,
-    CANCELLED
-}
-
-#[derive(AnchorSerialize, AnchorDeserialize, Clone, EnumString, PartialEq)]
-pub enum NFTStatus {
-    MINTED,
-    LISTED,
-    TRANSFERRED,
-    USED,
-    BURNED
-}
-
 #[account]
 pub struct Event {
     pub authority: Pubkey,
@@ -65,4 +41,28 @@ pub struct EventData {
     pub category: Category,
     pub deadline: i64,
     pub ticket_count: u32,
+}
+
+#[derive(AnchorSerialize, AnchorDeserialize, Clone, PartialEq, Eq)]
+pub enum Category {
+    PHYSICAL,
+    VIRTUAL,
+}
+
+#[derive(AnchorSerialize, AnchorDeserialize, Clone, EnumString, PartialEq)]
+pub enum CollectionStatus {
+    CREATED,
+    ACTIVE,
+    PAUSED,
+    COMPLETED,
+    CANCELLED
+}
+
+#[derive(AnchorSerialize, AnchorDeserialize, Clone, EnumString, PartialEq)]
+pub enum NFTStatus {
+    MINTED,
+    LISTED,
+    TRANSFERRED,
+    USED,
+    BURNED
 }

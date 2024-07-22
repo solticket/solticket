@@ -3,52 +3,82 @@ import { Program } from "@coral-xyz/anchor";
 import * as chai from 'chai';
 import { Solticket } from "../target/types/solticket";
 
+// Utilisez require pour l'IDL
+const idl = require('../target/idl/solticket.json');
+
 describe("solticket", () => {
   const assert = chai.assert;
+  
   // Configure the client to use the local cluster.
   anchor.setProvider(anchor.AnchorProvider.env());
-  const systemProgram = anchor.web3.SystemProgram;
-  const program = anchor.workspace.Solticket as Program<Solticket>;
+
+  // Use the actual program ID
+  const programId = new anchor.web3.PublicKey("DGHh1S6VCBmgY4R3Upm6wqV2ADTgEqPvYfgwBqxEW82e");
+  
+  // Initialize the program with the correct ID
+  const program = new anchor.Program(idl, programId, anchor.getProvider()) as Program<Solticket>;
   const programProvider = program.provider as anchor.AnchorProvider;
   
   it("Creer Event", async () => {
-    const titre = "Favorite Color";
-    const description = "Favorite Color";
-    const location = "France";
-    const category = "Virtual";
-    const votingDays = new anchor.BN(1000000000000);
-    const ticketCount = 0;
+    const eventData = {
+      title: "Favorite Color",
+      description: "Favorite Color description",
+      location: "France",
+      category: { virtual: {} }, // Assurez-vous que cela correspond à votre enum Category en Rust
+      deadline: new anchor.BN(22),
+      ticketCount: 0,
+    };
 
-    const eventCreator = programProvider.wallet;
-    const eventKeypair = anchor.web3.Keypair.generate();
-        
-    const txHash = await program.methods
-      .createEvent(titre, description, location, category, votingDays, ticketCount)
-      .accounts({
-        event: eventKeypair.publicKey,
-        signer: eventCreator.publicKey,
-
-      })
-      .signers([eventKeypair])
-      .rpc();
-
-      
-    await programProvider.connection.confirmTransaction(txHash);
-
-    const eventAccountResult = await program.account.event.fetch(
-      eventKeypair.publicKey
+    const authority = programProvider.wallet.publicKey;
+    
+    const [eventPda] = anchor.web3.PublicKey.findProgramAddressSync(
+      [Buffer.from("event"), authority.toBuffer(), Buffer.from(eventData.title)],
+      programId
     );
 
-    assert.strictEqual(eventAccountResult.authority.toString(), eventCreator.publicKey.toString());
-    assert.strictEqual(eventAccountResult.title, titre);
-    assert.strictEqual(eventAccountResult.description, description);
+    try {
+      const txHash = await program.methods
+        .createEvent(eventData)
+        .accounts({
+          authority: authority,
+          event: eventPda,
+          collection: anchor.web3.PublicKey.findProgramAddressSync(
+            [Buffer.from("collection"), eventPda.toBuffer()],
+            programId
+          )[0],
+          systemProgram: anchor.web3.SystemProgram.programId,
+        })
+        .rpc();
 
-    assert.strictEqual(eventAccountResult.location, location);
-    assert.strictEqual(JSON.stringify(eventAccountResult.category), '{"virtual":{}}');    
-    //assert.strictEqual(eventAccountResult.deadline, votingDays);
-    //chai.expect(eventAccountResult.deadline).to.be.a.bignumber.that.equals(votingDays);
-    assert.strictEqual(eventAccountResult.ticketCount, 0);
-    assert.strictEqual(JSON.stringify(eventAccountResult.status), '{"create":{}}');
+      console.log("Transaction hash:", txHash);
 
+      // Fetch the created event account
+      const eventAccount = await program.account.event.fetch(eventPda);
+
+      // Assert the event data
+      assert.strictEqual(eventAccount.authority.toString(), authority.toString());
+      assert.strictEqual(eventAccount.title, eventData.title);
+      assert.strictEqual(eventAccount.description, eventData.description);
+      assert.strictEqual(eventAccount.location, eventData.location);
+      assert.deepEqual(eventAccount.category, eventData.category);
+      assert.strictEqual(eventAccount.deadline.toNumber(), eventData.deadline.toNumber());
+      assert.strictEqual(eventAccount.ticketCount, eventData.ticketCount);
+
+      // Fetch and assert the collection account
+      const collectionPda = anchor.web3.PublicKey.findProgramAddressSync(
+        [Buffer.from("collection"), eventPda.toBuffer()],
+        programId
+      )[0];
+      const collectionAccount = await program.account.nftCollection.fetch(collectionPda);
+
+      assert.strictEqual(collectionAccount.authority.toString(), authority.toString());
+      assert.strictEqual(collectionAccount.event.toString(), eventPda.toString());
+      assert.strictEqual(collectionAccount.totalSupply, eventData.ticketCount);
+      assert.strictEqual(collectionAccount.mintedCount, 0);
+
+    } catch (error) {
+      console.error("Error:", error);
+      throw error;
+    }
+  });
 });
-})
